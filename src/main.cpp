@@ -81,7 +81,7 @@ ros::Subscriber<std_msgs::Int32> commandSub("information", commandCallback);
 
 MotorState currentState = STOP;  // initial state stop
 int OutputSpeed = 0;
-int speed = 75;
+int speed = 100;
 
 void setup() {
   // Initialize encoders
@@ -189,7 +189,7 @@ void turn_right() {
 
 const int motorAdj[4] = {1, 1, 1, 1};
 void controlMotor(int output, int motor, int pwmChannel1, int pwmChannel2) {
-  int actualOutput = output * motorAdj[motor - 1];
+  int actualOutput = constrain(output * motorAdj[motor - 1], -255, 255);
   if (output > 0) {
     ledcWrite(pwmChannel1, (int)actualOutput);
     ledcWrite(pwmChannel2, 0);
